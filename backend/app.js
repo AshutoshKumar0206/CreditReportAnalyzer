@@ -12,7 +12,7 @@ connectDB();
 
 app.use(express.static('public'));
 
-const allowedOrigins = ['http://localhost:3000']
+const allowedOrigins = ['https://credit-report-analyzer-phi.vercel.app', 'http://localhost:3000']
 app.use((req, res, next) =>{
     const origin = req.headers.origin;
     if(allowedOrigins.includes(origin)){
