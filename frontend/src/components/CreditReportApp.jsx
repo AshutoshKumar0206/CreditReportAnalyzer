@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Upload, FileText, TrendingUp, DollarSign, Activity, XCircle, AlertCircle, Search, Trash2, CheckCircle, CreditCard, MapPin } from 'lucide-react';
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_BASE_URL || "http://localhost:8000";
 const CreditReportApp = () => {
   const [activeTab, setActiveTab] = useState('upload');
   const [file, setFile] = useState(null);
@@ -29,7 +30,7 @@ const CreditReportApp = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('http://localhost:8000/reports/creditreports');
+      const response = await axios.get(`${apiUrl}/reports/creditreports`);
       
       if (response.data.success) {
         console.log(response.data);
@@ -47,7 +48,7 @@ const CreditReportApp = () => {
 
   const fetchStatisticsData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/reports/statistics');
+      const response = await axios.get(`${apiUrl}/reports/statistics`);
       if (response.data.success) {
         setStatistics(response.data.data);
       }
@@ -82,7 +83,7 @@ const CreditReportApp = () => {
         const formData = new FormData();
         formData.append('xmlFile', file);
 
-        const response = await axios.post('http://localhost:8000/reports/upload', formData, {
+        const response = await axios.post(`${apiUrl}/reports/upload`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
 
@@ -110,7 +111,7 @@ const CreditReportApp = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:8000/reports/creditreports/${id}`);;
+      const response = await axios.delete(`${apiUrl}/reports/creditreports/${id}`);;
       if (response.data.success) {
         setReports(reports.filter(r => r._id !== id));
         fetchStatisticsData();
@@ -134,7 +135,7 @@ const CreditReportApp = () => {
     setError(null);
 
     try {
-        const response = await axios.get('http://localhost:8000/reports/creditreports/search', {
+        const response = await axios.get(`${apiUrl}/reports/creditreports/search`, {
             params: { query: searchQuery }
         });
       if (response.data.success) {
