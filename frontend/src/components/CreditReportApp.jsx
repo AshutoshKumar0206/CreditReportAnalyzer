@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Upload, FileText, TrendingUp, DollarSign, Activity, XCircle, AlertCircle, Search, Trash2, CheckCircle, CreditCard, MapPin } from 'lucide-react';
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_BASE_URL || "http://localhost:8000";
+const apiUrl = window.location.hostname === "localhost"
+    ? "http://localhost:8000"
+    : process.env.REACT_APP_BASE_URL;
+    
 const CreditReportApp = () => {
   const [activeTab, setActiveTab] = useState('upload');
   const [file, setFile] = useState(null);
